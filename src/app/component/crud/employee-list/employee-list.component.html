@@ -1,0 +1,69 @@
+<div class="container" style="margin-top: 20px;">
+            <label for="">{{"id" | translate}}</label>
+            <input type="text" class="form-control" placeholder="{{'id' | translate}}" [(ngModel)]="id" [disabled]="IsUpdate">
+            <label for="">{{"Name" | translate}}</label>
+            <input type="text" class="form-control" placeholder="{{'Name' | translate}}" [(ngModel)]="name">
+            <label for="">{{"Email" | translate}}</label>
+            <input type="text" class="form-control" placeholder="{{'Email' | translate}}" [(ngModel)]="email">
+            <label for="">{{"PhoneNo" | translate}}</label>
+            <input type="text" class="form-control" placeholder="{{'PhoneNo' | translate}}" [(ngModel)]="mobile">
+            <label for="">{{"DOB" | translate}}</label>
+            <input type="date" class="form-control" placeholder="{{'DOB' | translate}}" [(ngModel)]="dob">
+            <label for="">{{"Salary" | translate}}</label>
+            <input type="text" class="form-control" placeholder="{{'Salary' | translate}}" [(ngModel)]="salary">
+            <label for="">{{"Possition" | translate}}</label>
+            <input type="text" class="form-control" placeholder="{{'Possition' | translate}}" [(ngModel)]="possition">
+            <button type="button" class="btn btn-success" (click)="save()" *ngIf="IsUpdate == false" >{{"Save" | translate}}</button>
+            <button type="button" class="btn btn-primary" (click)="save()" *ngIf="IsUpdate == true" >{{"update" | translate}}</button>
+            <hr>
+            
+        <table class="table tbl">
+            <thead>
+            <tr>
+                <th scope="col">{{"id" | translate}}</th>
+                <th scope="col">{{"Name" | translate}}</th>
+                <th scope="col">{{"Email" | translate}}</th>
+                <th scope="col">{{"PhoneNo" | translate}}</th>
+                <th scope="col">{{"DOB" | translate}}</th>
+                <th scope="col">{{"Salary" | translate}}</th>
+                <th scope="col">{{"Possition" | translate}}</th>
+                <th scope="col">Action</th>
+            </tr>
+            </thead>
+           
+            <tbody>
+            <tr *ngFor="let employee of Employeelist 
+            
+            | paginate
+            : {
+                itemsPerPage: tableSize,
+                currentPage: page,
+                totalItems: count
+              };
+               ">
+                <td>{{employee.id |zero}}</td>
+                <td>{{employee.name }}</td>
+                <td>{{employee.email}}</td>
+                <td>{{employee.mobile}}</td>
+                <td>{{employee.dob | dateformate }} </td>
+                <td [ngStyle]="{'color':employee.salary < 100 ? 'red' : 'green' }">{{employee.salary |currency}}</td>
+                <td>{{employee.possition}}</td>
+                <td>
+                    <!-- <img src="/src/assets/icon/edit.png" alt="" style="width:200px; height:auto;"> -->
+                        <img class="btn" style="width:50; height: 50px;" src="https://www.pngitem.com/pimgs/m/252-2523049_windows-10-icons-for-png-files-shown-in.png" (click)="empDetail(employee.id)" >
+                        <img class="btn" style="width:50; height: 50px;" src="https://cdn-icons-png.flaticon.com/512/4626/4626079.png" (click)="remove(employee.id)">
+                         <button (click)="detailEmp(employee.id)">Details</button> 
+                    </td>
+                
+            </tr>
+            </tbody>
+        </table>
+        <div class="d-flex justify-content-center">
+            <pagination-controls
+              previousLabel="Prev"
+              nextLabel="Next"
+              (pageChange)="onTableDataChange($event)"
+            >
+            </pagination-controls>
+          </div>
+    </div>
